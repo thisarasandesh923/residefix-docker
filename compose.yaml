@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+  backend:
+    build: ./residefix-server
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://mongo:27017/residefix
+      PORT: "5000"
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env before running}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+  frontend:
+    build: ./residefix-client
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+volumes:
+  mongo_data:
