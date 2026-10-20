@@ -3,5 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.DOCKER_APP === "true" ? "/" : "/residefix-client/",
+
+base: process.env.DOCKER_APP === "true" ? "/" : "/residefix-docker/",
+
 });
